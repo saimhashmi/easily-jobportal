@@ -1,0 +1,21 @@
+{
+	"name": "easily",
+	"version": "1.0.0",
+	"description": "A job portal website that allows recruiters to post and manage job listings and provides a user-friendly platform for job seekers to find and apply for suitable roles. Based on MVC architecture.",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"cookie-parser": "^1.4.7",
+		"ejs": "^5.0.2",
+		"express": "^5.2.1",
+		"express-ejs-layouts": "^2.5.1",
+		"express-session": "^1.19.0",
+		"express-validator": "^7.3.2",
+		"multer": "^2.1.1"
+	},
+	"author": "",
+	"license": "ISC"
+}
