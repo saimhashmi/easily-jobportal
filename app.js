@@ -1,57 +1,44 @@
-// const express = require("express");
+// Import neccessary modules
 import express from "express";
 import path from "path";
+import os from "os";
 import ejsLayouts from "express-ejs-layouts";
-// import session from "express-session";
-// import cookieParser from "cookie-parser";
-
-// import { auth } from "./src/middlewares/auth.middleware.js";
-
+// Import controllers
 import HomeController from "./src/controllers/home.controller.js";
+// Import middlewares
+import logger from "./src/middlewares/logger.middleware.js";
 
-const port = 3000;
-const server = express();
+const networkInterfaces = os.networkInterfaces();
+const host = networkInterfaces["Wi-Fi"].at(-1).address;
+const port = 8080;
+const app = express();
 
 // Parse form data
-// server.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Use Express-EJS-Layouts
-server.use(ejsLayouts);
-
-// Use Express-Session
-// server.use(
-// 	session({
-// 		secret: "SecretKey",
-// 		resave: false,
-// 		saveUninitialized: true,
-// 		cookie: { secure: false },
-// 	}),
-// );
-
-// Use Cookie-Parser
-// server.use(cookieParser());
+app.use(ejsLayouts);
 
 // For the public folder
-server.use(express.static("public"));
-
-// For the assets folder
-// server.use("/assets", express.static("assets"));
+app.use(express.static("public"));
 
 // For the views folder
-server.use(express.static("src/views"));
+app.use(express.static("src/views"));
+
+app.use(logger);
 
 // Set view engine
-server.set("view engine", "ejs");
+app.set("view engine", "ejs");
 // Set views Path
-server.set("views", path.join(path.resolve(), "src", "views"));
+app.set("views", path.join(path.resolve(), "src", "views"));
 
 // Create an instance of HomeController
 const homeController = new HomeController();
 
-server.get("/", homeController.getMain);
+app.get("/", homeController.getMain);
 
-server.listen(port, () => {
+app.listen(port, host, () => {
 	console.log(
-		`Server is listening on port ${port}, navigate to link http://localhost:${port}`,
+		`Server is listening on port ${port}, navigate to link http://${host}:${port}`,
 	);
 });
